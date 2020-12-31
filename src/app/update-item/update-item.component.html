@@ -1,0 +1,37 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<ul class="finalItems">
+    <br>
+    <input type="text" style="max-width:300px" placeholder="Search.." class="form-control" (input)="onSearchChange($event.target.value)">
+    <br>
+    <table id="customers">
+        <div>
+            <tr>
+                <th id="id">ID</th>
+                <th id="name">NAME</th>
+                <th id="price">PRICE</th>
+                <th id="quantity">QUANTITY</th>
+                <th id="sold">ADD</th>
+                <th id="update">UPDT</th>
+                <th id="remove">REM</th>
+                </tr>
+        </div>
+        <div *ngFor="let item of finalItems">
+            <tr>
+                <td id="id">{{item.id}}</td>
+                <td id="name"><input id="name" [(ngModel)]="item.name"></td>
+                <td id="price"><input id="inp" [(ngModel)]="item.price" type="number" min="0"></td>
+                <td id="quantity">{{item.quantity}}</td>
+                <td id="sold"><input id="inp" [(ngModel)]="item.add" type="number" min="0"></td>
+                <td id="update"><button type="button" class="btn btn-success" id={{item.id}} (click)="updateItems($event)">U</button></td>
+                <td id="update"><button type="button" class="btn btn-danger" id={{item.id}} (click)="removeItem($event)">R</button></td>
+            </tr>
+        </div>
+    </table>
+    <br>
+</ul>

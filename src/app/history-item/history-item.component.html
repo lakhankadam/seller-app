@@ -1,0 +1,145 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<label for="time">Time:</label>
+<select [(ngModel)]="selectedTime" #myTime (change)='onTimeSelected(myTime.value)'>
+    <option value="today">Today</option>
+    <option value="yesterday">Yesterday</option>
+    <option value="week">Last Week</option>
+    <option value="month">Last Month</option>
+    <option value="custom">Custom</option>
+    <option value="all">All</option>
+ </select>
+
+<label for="order">Order by:</label>
+ <select [(ngModel)]="selectedOrder" #myOrder (change)='onOrderSelected(myOrder.value)'>
+    <option value="date">Date</option>
+    <option value="item">Item</option>
+ </select>
+
+<ng-container *ngIf="custom">
+    <input type="date" id="from"  [(ngModel)]="fromDate" min="2020-12-01" max={{maxDate}}>
+    <input type="date" id="to"  [(ngModel)]="toDate" min = {{fromDate}} max={{maxDate}}>   
+</ng-container>
+<br>
+<button (click)="getData()" class="btn btn-success">Get</button>
+<button (click)="clear()" class="btn btn-danger">Reset</button>
+<br><br>
+<ul>
+    <input type="text" style="max-width:300px;" placeholder="Search.." class="form-control" (input)="onSearchChange($event.target.value)">
+</ul>
+
+<ng-container *ngIf="visibility.date">
+    <ul>
+        <div *ngFor="let val of datesItem">
+            <div>Date: {{val.date}}</div>
+            <table id="customers">
+                <div>
+                    <tr>
+                        <th id="name">NAME</th>
+                        <th id="price">PRICE</th>
+                        <th id="sold">SOLD</th>
+                        <th id="amount">AMT</th>
+                    </tr>
+                </div>
+                <div *ngFor="let item of val.itemOrder">
+                    <tr>
+                        <td id="name">{{item.name}}</td>
+                        <td id="price">{{item.price}}</td>
+                        <td id="sold">{{item.sold}}</td>
+                        <td id="amount">{{item.amount}}</td>
+                    </tr>    
+                </div>
+            </table>
+        </div>
+    </ul>
+</ng-container>
+
+<ng-container *ngIf="visibility.item">
+    <ul>
+        <div *ngFor="let val of itemsItem">
+            <div>Name: {{val.name}}</div>
+            <table id="customers">
+                <div>
+                    <tr>
+                        <th id="date">DATE</th>
+                        <th id="price">PRICE</th>
+                        <th id="sold">SOLD</th>
+                        <th id="amount">AMT</th>
+                    </tr>
+                </div>
+                <div *ngFor="let item of val.dateOrder">
+                    <tr>
+                        <td id="date">{{item.date}}</td>
+                        <td id="price">{{item.price}}</td>
+                        <td id="sold">{{item.sold}}</td>
+                        <td id="amount">{{item.amount}}</td>
+                        </tr>    
+                </div>
+            </table>
+        </div>
+    </ul>
+</ng-container>
+
+<!-- <ng-container *ngIf="visibility.date">
+<ul class="finalItems">
+    <div *ngFor="let val of finalItemsByDate">
+        <div>Date: {{val.date}}</div>
+        <div *ngFor="let data of (val.data)">
+            <table id="customers">
+                <div>
+                    <tr>
+                        <th id="id">ID</th>
+                        <th id="name">NAME</th>
+                        <th id="price">PRICE</th>
+                        <th id="sold">SOLD</th>
+                        <th id="amount">AMT</th>
+                    </tr>
+                </div>
+                <div *ngFor="let item of (data.items)">
+                    <tr>
+                        <td id="id">{{item.id}}</td>
+                        <td id="name">{{item.name}}</td>
+                        <td id="price">{{item.price}}</td>
+                        <td id="sold">{{item.sold}}</td>
+                        <td id="amount">{{item.price*item.sold}}</td>
+                    </tr>
+                </div>
+            </table>
+        </div>
+    </div>
+</ul>
+</ng-container>
+
+<ng-container *ngIf="visibility.item">
+    <ul class="finalItems">
+        <div *ngFor="let val of finalItemsByItem">
+            <div>Item Name: {{val.name}}</div>
+            <table id="customers">
+                <div>
+                    <tr>
+                        <th id="date">DATE</th>
+                        <th id="price">PRICE</th>
+                        <th id="sold">SOLD</th>
+                        <th id="amount">AMT</th>
+                    </tr>
+                </div>
+                <div *ngFor="let data of (val.data)">
+                    <tr>
+                        <td id="date">{{data.date}}</td>
+                        <td id="price">{{data.price}}</td>
+                        <td id="sold">{{data.sold}}</td>
+                        <td id="amount">{{data.amount}}</td>
+                    </tr>
+                </div>
+        </table>
+        </div>
+    </ul>
+</ng-container>
+
+
+  -->

@@ -1,0 +1,37 @@
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+#customers td, th{
+  border: 1px solid black;
+  text-align: center;
+  /* width: 25%; */
+}
+
+#name
+{
+  width: 300px;
+  text-align: center;
+}
+
+#price, #quantity
+{
+  width: 80px;
+}
+
+#id, #sold, #inp
+{
+  width: 80px;
+}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+  /* width: 25%; */
+}

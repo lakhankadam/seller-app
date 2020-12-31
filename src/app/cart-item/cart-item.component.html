@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<ng-container *ngIf="!cartIsEmpty">
+    <p>YOUR CART IS EMPTY !!!</p>
+</ng-container>
+<br>
+<ng-container *ngIf="cartIsEmpty">
+    <ul class="items">
+        <div>
+            <h2 id="shop">RAJ ELECTRONICS</h2>
+        <div>
+            <label for="todayDate">Date: {{todayDate}}</label>
+        </div>
+        <table id="customers">
+        <div>
+            <tr>
+                <th id="id">NO</th>
+                <th id="name">NAME</th>
+                <th id="price">PRICE</th>
+                <th id="quantity">QTY</th>
+                <th id="quantity">SELL</th>
+                <th id="amount">AMT</th>
+                <th id="remove">REMOVE!?</th>
+            </tr>
+        </div>
+        <div *ngFor="let item of items">
+        <tr>
+        <td id="id">{{item.no}}</td>
+        <td id="name">{{item.name}}</td>
+        <td id="price">{{item.price}}</td>
+        <td id="quantity">{{item.quantity}}</td>
+        <td id="sold"><input type="number" id=" inp {{item.id}}" [(ngModel)]="item.sold" min="1" max="{{item.quantity}}" (input)="onSoldChange($event)"></td>
+        <td id="amount">{{item.sold*item.price}}</td>
+        <td id="remove"><button type="button" class="btn btn-danger" id={{item.id}} (click)="removeItem($event)">Remove</button></td>
+        </tr>
+        </div>
+        </table>
+        <div id="total" style="padding-left: 350px;"><b>TOTAL: {{sum_total}}</b></div>
+        </div>
+        <button type="button" class="btn btn-success" (click)="placeOrder()">Place Order</button>
+        <button type="button" class="btn btn-danger" (click)="clearCart()">Clear Cart</button>
+        <button type="button" class="btn btn-success" (click)='printOrder()'>Print Order</button>
+    </ul>
+</ng-container>
+
+<ng-container *ngIf="true">
+    <ul class="items">
+        <div id="printData">
+            <h2 id="shop">RAJ ELECTRONICS</h2>
+        <div>
+            <label for="todayDate">Date: {{todayDate}}</label>
+        </div>
+        <table id="customers">
+        <div>
+            <tr>
+                <th id="id">NO</th>
+                <th id="name">NAME</th>
+                <th id="price">PRICE</th>
+                <th id="quantity">SELL</th>
+                <th id="amount">AMT</th>
+            </tr>
+        </div>
+        <div *ngFor="let item of items">
+        <tr>
+        <td id="id">{{item.no}}</td>
+        <td id="name">{{item.name}}</td>
+        <td id="price">{{item.price}}</td>
+        <td id="sold">{{item.sold}}</td>
+        <td id="amount">{{item.sold*item.price}}</td>
+        </tr>
+        </div>
+        </table>
+        <div id="total" style="padding-left: 350px;"><b>TOTAL: {{sum_total}}</b></div>
+        </div>
+    </ul>
+</ng-container>
+

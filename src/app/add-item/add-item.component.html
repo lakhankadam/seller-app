@@ -1,0 +1,27 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <br>
+  <ul>
+  <h3>Add Item</h3>
+  <table id="customers">
+    <tr>
+    <td><label for="name">Name</label></td>
+    <td><input style="text-transform:uppercase" [(ngModel)]="name"></td>
+    </tr>
+    <tr>
+    <td><label for="quantity">Quantity</label></td>
+    <td><input type="number" [(ngModel)]="quantity"></td> 
+    </tr>
+    <tr>
+    <td><label for="price">Price</label></td>
+    <td><input type="number" [(ngModel)]="price"></td>
+    </tr>
+  </table>
+  <br>
+    <button type="button" class="btn btn-success" (click)="onSubmit()">Save</button>
+  </ul>

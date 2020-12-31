@@ -1,0 +1,27 @@
+#customers {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 20%;
+    /* table-layout: fixed; */
+    text-align: center;
+  }
+  #customers td, #customers th {
+    border: 1px solid black;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  
+  #customers tr:hover {background-color: #ddd;}
+  
+  #customers th {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+    width: 50%;
+  }
