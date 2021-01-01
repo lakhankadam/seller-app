@@ -36,11 +36,13 @@
 <ul>
     <input type="text" style="max-width:300px;" placeholder="Search.." class="form-control" (input)="onSearchChange($event.target.value)">
 </ul>
+<br>
 
 <ng-container *ngIf="visibility.date">
     <ul>
         <div *ngFor="let val of datesItem">
-            <div>Date: {{val.date}}</div>
+            <h4>Date: {{val.date}}</h4>
+            <h5>Total Amount: {{val.totaldateamount}}</h5>
             <table id="customers">
                 <div>
                     <tr>
@@ -59,6 +61,7 @@
                     </tr>    
                 </div>
             </table>
+            <br>
         </div>
     </ul>
 </ng-container>
@@ -66,7 +69,9 @@
 <ng-container *ngIf="visibility.item">
     <ul>
         <div *ngFor="let val of itemsItem">
-            <div>Name: {{val.name}}</div>
+            <br>
+            <h4>Name: {{val.name}}</h4>
+            <h5>Total Amount: {{val.totalitemamount}}</h5>
             <table id="customers">
                 <div>
                     <tr>
@@ -86,6 +91,7 @@
                 </div>
             </table>
         </div>
+        <br>
     </ul>
 </ng-container>
 </ul>

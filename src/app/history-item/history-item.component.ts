@@ -119,6 +119,7 @@ orderItemsByDate()
           amount+=occurence.amount;
         }
         this.finalItemsByDate[i].itemOrder.push({name:item.name, price: item.price, sold: sold, amount: amount});
+        this.finalItemsByDate[i].totaldateamount += amount;
       }
     }
   }
@@ -151,6 +152,7 @@ orderItemsByItems()
             amount+=occurence.amount;
           }
           this.finalItemsByItem[i].dateOrder.push({date:date.date, name:date.name, price: date.price, sold: sold, amount: amount});
+          this.finalItemsByItem[i].totalitemamount += amount;
         }
     }
     }
@@ -197,7 +199,7 @@ getHistory(params: HttpParams)
               if(!dateSet.has(date))
               {
                 this.itemsByDate.push({date:date, itemOrder:[{name:item.name, price:item.price, sold:item.sold, amount: item.price*item.sold}]});
-                this.finalItemsByDate.push({date:date,itemOrder:[]});
+                this.finalItemsByDate.push({date:date, totaldateamount: 0, itemOrder:[]});
                 dateSet.add(date);
               }
               else
@@ -220,7 +222,7 @@ getHistory(params: HttpParams)
               if(!itemSet.has(item.name))
               {
                 this.itemsByItem.push({name:item.name, dateOrder:[{date: date, price:item.price, sold:item.sold, amount: item.price*item.sold}]});
-                this.finalItemsByItem.push({name:item.name,dateOrder:[]});
+                this.finalItemsByItem.push({name:item.name, totalitemamount: 0, dateOrder:[]});
                 itemSet.add(item.name);
               }
               else
