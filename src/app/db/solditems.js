@@ -6,7 +6,6 @@ const SoldItemsSchema = Schema({
     amount:Number,
     items:
     [{
-        id: Number,
         name: String,
         price: Number,
         sold: Number 

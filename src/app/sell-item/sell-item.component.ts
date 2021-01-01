@@ -21,10 +21,10 @@ export class SellItemComponent implements OnInit {
   addtoCart(event:any)
   {
     var idAttr = event.target.attributes.id;
-    var id = idAttr.nodeValue;
-    console.log(id);
+    var _id = idAttr.nodeValue;
+    console.log(_id);
     var item = this.allItems.find(val => {
-      return val.id == id;
+      return val._id == _id;
     });
     item.sold = 1;
     console.log(item);
@@ -47,14 +47,14 @@ export class SellItemComponent implements OnInit {
         for(let i in results)
         {
           var value = JSON.stringify(results[i]);
-          var doc_id = JSON.parse(value)._id;
-          var id = JSON.parse(value).id;
+          var _id = JSON.parse(value)._id;
+          var id = parseInt(i)+1;
           var name = JSON.parse(value).name;
           var price = JSON.parse(value).price;
           var quantity = JSON.parse(value).quantity;
           var sold = "";
           if(quantity != 0)
-            this.allItems.push({doc_id,id,name,price,quantity,sold});
+            this.allItems.push({_id,id,name,price,quantity,sold});
         }
         this.finalItems = this.allItems;
       }

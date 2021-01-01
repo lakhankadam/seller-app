@@ -5,6 +5,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<ul>
+<br>
+<h3>Items History</h3>
+<br>
 <label for="time">Time:</label>
 <select [(ngModel)]="selectedTime" #myTime (change)='onTimeSelected(myTime.value)'>
     <option value="today">Today</option>
@@ -84,6 +88,7 @@
         </div>
     </ul>
 </ng-container>
+</ul>
 
 <!-- <ng-container *ngIf="visibility.date">
 <ul class="finalItems">

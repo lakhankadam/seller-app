@@ -34,9 +34,9 @@
         <td id="name">{{item.name}}</td>
         <td id="price">{{item.price}}</td>
         <td id="quantity">{{item.quantity}}</td>
-        <td id="sold"><input type="number" id=" inp {{item.id}}" [(ngModel)]="item.sold" min="1" max="{{item.quantity}}" (input)="onSoldChange($event)"></td>
+        <td id="sold"><input type="number" id=" inp {{item._id}}" [(ngModel)]="item.sold" min="1" max="{{item.quantity}}" (input)="onSoldChange($event)"></td>
         <td id="amount">{{item.sold*item.price}}</td>
-        <td id="remove"><button type="button" class="btn btn-danger" id={{item.id}} (click)="removeItem($event)">Remove</button></td>
+        <td id="remove"><button type="button" class="btn btn-danger" id={{item._id}} (click)="removeItem($event)">Remove</button></td>
         </tr>
         </div>
         </table>
@@ -44,7 +44,6 @@
         </div>
         <button type="button" class="btn btn-success" (click)="placeOrder()">Place Order</button>
         <button type="button" class="btn btn-danger" (click)="clearCart()">Clear Cart</button>
-        <button type="button" class="btn btn-success" (click)='printOrder()'>Print Order</button>
     </ul>
 </ng-container>
 

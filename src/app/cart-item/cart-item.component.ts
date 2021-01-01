@@ -24,6 +24,8 @@ export class CartItemComponent implements OnInit {
     date = date.split("-").reverse().join("-");
     this.newService.placeOrder({mode:"sell", items:this.items, date:date, amount:this.sum_total});
     alert("ORDER PLACED SUCCESSFULLY!!!");
+    this.printOrder();
+    this.clearCart();
   }
   onSoldChange(event:any)
   {
@@ -31,24 +33,24 @@ export class CartItemComponent implements OnInit {
     var ID = idAttr.nodeValue;
     var id = ID.split(" ")[2];
     var item = this.items.find(val => {
-      return val.id == id;
+      return val._id == id;
     })
     var ind = this.sum_items.findIndex(val =>{
-      return val.id == id;
+      return val._id == id;
     })
     this.sum_items[ind].amount = item.price*item.sold;
     var newSum = 0;
     for(let sum_item of this.sum_items)
-      newSum += parseInt(sum_item.amount);
+      newSum += parseFloat(sum_item.amount);
 
     this.sum_total = newSum;
   }
   removeItem(event: any)
   {
     var idAttr = event.target.attributes.id;
-    var id = idAttr.nodeValue;
-    console.log(id);
-    this.http.delete('http://localhost:8000/api/removeCartItem/'+id).subscribe(
+    var _id = idAttr.nodeValue;
+    console.log(_id);
+    this.http.delete('http://localhost:8000/api/removeCartItem/'+_id).subscribe(
       results => {
         console.log(results);
       }
@@ -94,12 +96,12 @@ export class CartItemComponent implements OnInit {
             this.cartIsEmpty = true;
             this.items.push(results[i]);
           }
-          // console.log(results);
+
           for(let i in this.items)
           {
             var amount = this.items[i].price*this.items[i].sold
             this.sum_total += amount;
-            this.sum_items.push({id:this.items[i].id, amount:amount});
+            this.sum_items.push({_id:this.items[i]._id, amount:amount});
             this.items[i].no = this.items.length - parseInt(i);
           }
           this.items.reverse();

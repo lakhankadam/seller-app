@@ -9,6 +9,7 @@
 
 <ul class="finalItems">
     <br>
+    <h3>Sell Items</h3>
     <input type="text" style="max-width:300px" placeholder="Search.." class="form-control" (input)="onSearchChange($event.target.value)">
     <br>
     <table id="customers">
@@ -27,7 +28,7 @@
     <td id="name">{{item.name}}</td>
     <td id="price">{{item.price}}</td>
     <td id="quantity">{{item.quantity}}</td>
-    <td id="sold"><button type="button" class="btn btn-success" id={{item.id}} (click)="addtoCart($event)">Add</button></td>
+    <td id="sold"><button type="button" class="btn btn-success" id={{item._id}} (click)="addtoCart($event)">Add</button></td>
     </tr>
     </div>
     </table>

@@ -7,6 +7,7 @@
 
 <ul class="finalItems">
     <br>
+    <h3>Update Items</h3>
     <input type="text" style="max-width:300px" placeholder="Search.." class="form-control" (input)="onSearchChange($event.target.value)">
     <br>
     <table id="customers">
@@ -28,8 +29,8 @@
                 <td id="price"><input id="inp" [(ngModel)]="item.price" type="number" min="0"></td>
                 <td id="quantity">{{item.quantity}}</td>
                 <td id="sold"><input id="inp" [(ngModel)]="item.add" type="number" min="0"></td>
-                <td id="update"><button type="button" class="btn btn-success" id={{item.id}} (click)="updateItems($event)">U</button></td>
-                <td id="update"><button type="button" class="btn btn-danger" id={{item.id}} (click)="removeItem($event)">R</button></td>
+                <td id="update"><button type="button" class="btn btn-success" id={{item._id}} (click)="updateItems($event)">O</button></td>
+                <td id="update"><button type="button" class="btn btn-danger" id={{item._id}} (click)="removeItem($event)">X</button></td>
             </tr>
         </div>
     </table>

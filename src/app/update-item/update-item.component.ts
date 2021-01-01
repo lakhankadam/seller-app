@@ -19,9 +19,9 @@ export class UpdateItemComponent implements OnInit {
   removeItem(event: any)
   {
     var idAttr = event.target.attributes.id;
-    var id = idAttr.nodeValue;
-    console.log(id);
-    this.http.delete('http://localhost:8000/api/removeSellItem/'+id).subscribe(
+    var _id = idAttr.nodeValue;
+    console.log(_id);
+    this.http.delete('http://localhost:8000/api/removeSellItem/'+_id).subscribe(
       results => {
         console.log(results);
       }
@@ -32,9 +32,9 @@ export class UpdateItemComponent implements OnInit {
   updateItems(event: any)
   {
     var idAttr = event.target.attributes.id;
-    var id = idAttr.nodeValue;
+    var _id = idAttr.nodeValue;
     var item = this.finalItems.find(val =>
-      {return val.id == id});
+      {return val._id == _id});
     console.log(item);
     this.newService.placeOrder({mode:"update",item:item});
     window.location.reload();
@@ -56,13 +56,13 @@ export class UpdateItemComponent implements OnInit {
         for(let i in results)
         {
           var value = JSON.stringify(results[i]);
-          var doc_id = JSON.parse(value)._id;
-          var id = JSON.parse(value).id;
+          var _id = JSON.parse(value)._id;
+          var id = parseInt(i) + 1;
           var name = JSON.parse(value).name;
           var price = JSON.parse(value).price;
           var quantity = JSON.parse(value).quantity;
           var add = "";
-          this.allItems.push({doc_id,id,name,price,quantity,add});
+          this.allItems.push({_id,id,name,price,quantity,add});
         }
         this.finalItems = this.allItems;
       }

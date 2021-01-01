@@ -29,7 +29,6 @@ app.post('/api/saveItem',(req,res) =>
                     console.log(err);
                 else if(foundObject)
                 {
-                    itemData.id = foundObject.length + 1;
                     var item = new Item(itemData);
                     item.save((err,result) =>{
                         if(err)
@@ -65,7 +64,7 @@ app.post('/api/updateItems', (req,res) =>
         })
         for(let i in items)
         {
-            var query = {id: items[i].id};
+            var query = {_id: items[i]._id};
             
             Item.findOne(query, function(err, foundObject){
                 if(err)
@@ -90,7 +89,7 @@ app.post('/api/updateItems', (req,res) =>
     else if(mode == "update")
     {
         var item = req.body.item;
-        var query = {id:item.id};
+        var query = {_id:item._id};
         Item.findOne(query, function(err,foundObject){
             if(err)
                 console.log(err);
@@ -115,7 +114,7 @@ app.post('/api/updateItems', (req,res) =>
 app.post('/api/cartItems', (req,res) => {
     var item = req.body.item;
     console.log(item);
-    var query = {id:item.id};
+    var query = {_id:item._id};
     CartItem.findOne(query, function(err,foundObject){
         if(err)
             console.log(err);
@@ -133,7 +132,7 @@ app.post('/api/cartItems', (req,res) => {
     });
 });
 
-app.delete('/api/removeSellItem/:id', (req,res) =>
+app.delete('/api/removeSellItem/:_id', (req,res) =>
 {
     var query = req.params;
     Item.findOneAndDelete(query,function(err,object){
@@ -150,8 +149,9 @@ app.get('/api/cartItems', async (req,res) =>
     res.send(cartitems);
 });
 
-app.delete('/api/removeCartItem/:id', (req,res) =>
+app.delete('/api/removeCartItem/:_id', (req,res) =>
 {
+    console.log(req.params);
     var query = req.params;
     CartItem.findOneAndDelete(query,function(err,object){
         if(err)
@@ -233,7 +233,7 @@ app.get('/api/itemsHistory', async (req,res) =>
     }
 });
 
-mongoose.connect("mongodb://localhost:27017/seller")
+mongoose.connect("mongodb://localhost:27017/seller", { useNewUrlParser: true ,useUnifiedTopology: true } )
 app.listen(8000, function(){
     console.log("Listening at 8000");
 });
