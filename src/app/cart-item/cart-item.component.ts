@@ -72,6 +72,9 @@ export class CartItemComponent implements OnInit {
           'border:1px solid #000;' +
           'padding:0.5em;' +
           '}' +
+          '#total{'+
+          'position:absolute;'+
+          '}'+
           '</style>';
       
     htmlToPrint += divToPrint.outerHTML;
