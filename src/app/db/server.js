@@ -11,7 +11,6 @@ app.use(cors())
 var Item = require('./item');
 var CartItem = require('./cartitem');
 var SoldItems = require('./solditems');
-const { resolveSanitizationFn } = require('@angular/compiler/src/render3/view/template');
 
 app.post('/api/saveItem',(req,res) =>
 {
@@ -22,21 +21,11 @@ app.post('/api/saveItem',(req,res) =>
             console.log(err);
         else if(!obj)
         {
-            if(err)
-                console.log(err);
-            Item.find({},function(err,foundObject){
+            var item = new Item(itemData);
+            item.save((err,result) =>{
                 if(err)
                     console.log(err);
-                else if(foundObject)
-                {
-                    var item = new Item(itemData);
-                    item.save((err,result) =>{
-                        if(err)
-                            console.log(err);
-                        console.log(result);
-                    })
-                }
-            });
+            })
         }
     });
 })
@@ -57,7 +46,6 @@ app.post('/api/updateItems', (req,res) =>
         solditems.items = items;
         solditems.date = req.body.date;
         solditems.amount = req.body.amount;
-        console.log(solditems);
         solditems.save((err,res) =>{
             if(err)
                 console.log(err);
@@ -71,15 +59,12 @@ app.post('/api/updateItems', (req,res) =>
                     console.log(err);
                 else
                 {
-                    if(!foundObject)
-                        console.log("NOT FOUND!!!");
-                    else
+                    if(foundObject)
                     {
                         foundObject.quantity -= items[i].sold;
                         foundObject.save(function(err,updatedObject){
                             if(err)
                                 console.log(err);
-                            console.log(updatedObject);
                         })
                     }
                 }
@@ -104,7 +89,6 @@ app.post('/api/updateItems', (req,res) =>
                 foundObject.save(function(err,updatedObject){
                     if(err)
                         console.log(err);
-                    console.log(updatedObject);
                 })
             }
         })
@@ -113,7 +97,6 @@ app.post('/api/updateItems', (req,res) =>
 
 app.post('/api/cartItems', (req,res) => {
     var item = req.body.item;
-    console.log(item);
     var query = {_id:item._id};
     CartItem.findOne(query, function(err,foundObject){
         if(err)
@@ -138,8 +121,6 @@ app.delete('/api/removeSellItem/:_id', (req,res) =>
     Item.findOneAndDelete(query,function(err,object){
         if(err)
             console.log(err);
-        else
-            console.log(object);
     });
 });
 
@@ -151,13 +132,11 @@ app.get('/api/cartItems', async (req,res) =>
 
 app.delete('/api/removeCartItem/:_id', (req,res) =>
 {
-    console.log(req.params);
     var query = req.params;
     CartItem.findOneAndDelete(query,function(err,object){
         if(err)
             console.log(err);
-        else
-            console.log(object);
+        
     });
 });
 
@@ -189,14 +168,8 @@ app.get('/api/itemsHistory', async (req,res) =>
             console.log(err);
             else
             {
-                if(!allObjects)
-                    console.log("NOT FOUND!!!");
-                else
-                {
-                    console.log(allObjects);
-                    res.send(allObjects);
-                }
-                    
+                if(allObjects && allObjects.length)
+                    res.send(allObjects);                    
             }
         })
     }
@@ -211,7 +184,6 @@ app.get('/api/itemsHistory', async (req,res) =>
           }
 
         var dlist = daylist.map((v)=>v.toISOString().split("T",1)[0].split("-").reverse().join("-"));
-        console.log(dlist);
         for(let i in dlist)
         {
             query = {date:dlist[i]};

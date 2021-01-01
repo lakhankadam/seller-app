@@ -41,7 +41,6 @@ clearVisibility()
 
 onSearchChange(searchValue: string): void {  
   searchValue = searchValue.toLowerCase();
-  console.log(searchValue);
   if(this.visibility.date == true)
   {
     this.datesItem = this.finalItemsByDate.filter(val=>
@@ -124,7 +123,6 @@ orderItemsByDate()
     }
   }
   this.datesItem = this.finalItemsByDate;
-  console.log(this.datesItem);
 }
 
 orderItemsByItems()
@@ -157,7 +155,6 @@ orderItemsByItems()
     }
     }
   this.itemsItem = this.finalItemsByItem;
-  console.log(this.itemsItem);
 }
 
 getHistory(params: HttpParams)
@@ -236,8 +233,6 @@ getHistory(params: HttpParams)
           }
         }
         this.orderItemsByItems();
-        console.log(this.itemsByItem);
-      // console.log(this.finalItemsByItem);
     }
   )
 }

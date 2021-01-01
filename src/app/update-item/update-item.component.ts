@@ -10,6 +10,8 @@ import { HttpClient} from '@angular/common/http';
 export class UpdateItemComponent implements OnInit {
   allItems = [];
   finalItems = [];
+  getItemsUrl = 'http://localhost:8000/api/getItems';
+  removeItemUrl = 'http://localhost:8000/api/removeSellItem/';
   constructor(private http: HttpClient, private newService: CommonService) { }
 
   ngOnInit(): void {
@@ -20,12 +22,21 @@ export class UpdateItemComponent implements OnInit {
   {
     var idAttr = event.target.attributes.id;
     var _id = idAttr.nodeValue;
-    console.log(_id);
-    this.http.delete('http://localhost:8000/api/removeSellItem/'+_id).subscribe(
-      results => {
-        console.log(results);
-      }
-    );
+    var item = this.finalItems.find(val =>{
+      return val._id == _id;
+    })
+    if(confirm("Are you sure you want to remove "+item.name+" ?"))
+    {
+      this.http.delete(this.removeItemUrl+_id).subscribe(
+        results => {
+          console.log(results);
+        }
+      );
+    }
+    else
+    {
+      alert(item.name+" not removed!");
+    }
     window.location.reload();
   }
 
@@ -35,8 +46,21 @@ export class UpdateItemComponent implements OnInit {
     var _id = idAttr.nodeValue;
     var item = this.finalItems.find(val =>
       {return val._id == _id});
-    console.log(item);
+    if(item.name == undefined || item.name.trim().length == 0)
+    {
+      alert("Name cannot be set empty");
+      return;
+    }
+    if(item.price <=0 || parseInt(item.add) <=0)
+    {
+      if(item.price <= 0)
+        alert("Price should be greater than zero");
+      if(parseInt(item.add) <=0)
+        alert("Quantity to add should be greater than zero");
+      return;
+    }
     this.newService.placeOrder({mode:"update",item:item});
+    alert(item.name+ " updated!");
     window.location.reload();
   }
 
@@ -44,14 +68,13 @@ export class UpdateItemComponent implements OnInit {
     searchValue = searchValue.toLowerCase();
     this.finalItems = this.allItems.filter(val=>
       {
-        // console.log(val.name);
         return val.name.toLowerCase().includes(searchValue);
       })
   }
   getAllItems()
   {
     this.allItems = [];
-    this.http.get('http://localhost:8000/api/getItems').subscribe(
+    this.http.get(this.getItemsUrl).subscribe(
       results => {
         for(let i in results)
         {

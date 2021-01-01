@@ -13,6 +13,9 @@ export class CartItemComponent implements OnInit {
   sum_items = [];
   cartIsEmpty = false;
   todayDate = new Date().toISOString().split("T",1)[0].split("-").reverse().join("-");
+  removeCartItemUrl = 'http://localhost:8000/api/removeCartItem/';
+  getCartItemsUrl = 'http://localhost:8000/api/cartItems';
+  clearCartUrl = 'http://localhost:8000/api/clearCart';
   constructor(private http: HttpClient, private newService: CommonService) { }
 
   ngOnInit(): void {
@@ -49,8 +52,7 @@ export class CartItemComponent implements OnInit {
   {
     var idAttr = event.target.attributes.id;
     var _id = idAttr.nodeValue;
-    console.log(_id);
-    this.http.delete('http://localhost:8000/api/removeCartItem/'+_id).subscribe(
+    this.http.delete(this.removeCartItemUrl+_id).subscribe(
       results => {
         console.log(results);
       }
@@ -61,8 +63,6 @@ export class CartItemComponent implements OnInit {
   printOrder()
   {
     var divToPrint = document.getElementById("printData");
-    // console.log(divToPrint.innerHTML);
-    console.log(this.items);
     var htmlToPrint = '' +
           '<style type="text/css">' +
           '#shop{'+
@@ -89,7 +89,7 @@ export class CartItemComponent implements OnInit {
 
   getCartItems()
   {
-    this.http.get('http://localhost:8000/api/cartItems').subscribe(
+    this.http.get(this.getCartItemsUrl).subscribe(
       results => {
           for(let i in results)
           {
@@ -110,7 +110,7 @@ export class CartItemComponent implements OnInit {
   }
   clearCart()
   {
-    this.http.delete('http://localhost:8000/api/clearCart').subscribe(
+    this.http.delete(this.clearCartUrl).subscribe(
       results => {
         console.log(results);
       }

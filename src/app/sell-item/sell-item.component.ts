@@ -12,6 +12,7 @@ export class SellItemComponent implements OnInit {
   cartItems = {};
   addItemstoCart = [];
   finalItems = [];
+  getItemsUrl = 'http://localhost:8000/api/getItems';
   constructor(private http: HttpClient, private newService: CommonService) { }
 
   ngOnInit(): void {
@@ -22,12 +23,11 @@ export class SellItemComponent implements OnInit {
   {
     var idAttr = event.target.attributes.id;
     var _id = idAttr.nodeValue;
-    console.log(_id);
     var item = this.allItems.find(val => {
       return val._id == _id;
     });
     item.sold = 1;
-    console.log(item);
+    alert(item.name+" added in cart");
     
     this.newService.cartItems({item:item});
   }
@@ -42,7 +42,7 @@ export class SellItemComponent implements OnInit {
   getAllItems()
   {
     this.allItems = [];
-    this.http.get('http://localhost:8000/api/getItems').subscribe(
+    this.http.get(this.getItemsUrl).subscribe(
       results => {
         for(let i in results)
         {
