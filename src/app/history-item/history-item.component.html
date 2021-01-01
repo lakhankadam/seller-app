@@ -41,8 +41,8 @@
 <ng-container *ngIf="visibility.date">
     <ul>
         <div *ngFor="let val of datesItem">
-            <h4>Date: {{val.date}}</h4>
-            <h5>Total Amount: {{val.totaldateamount}}</h5>
+            <h5>Date: {{val.date}}</h5>
+            <h6>Total Amount: {{val.totaldateamount}}</h6>
             <table id="customers">
                 <div>
                     <tr>
@@ -70,8 +70,9 @@
     <ul>
         <div *ngFor="let val of itemsItem">
             <br>
-            <h4>Name: {{val.name}}</h4>
-            <h5>Total Amount: {{val.totalitemamount}}</h5>
+            <h5>Name: {{val.name}}</h5>
+            <h6>Total Items Sold: {{val.totalitemsold}}</h6>
+            <h6>Total Amount: {{val.totalitemamount}}</h6>
             <table id="customers">
                 <div>
                     <tr>
