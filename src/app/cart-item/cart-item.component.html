@@ -29,18 +29,18 @@
             </tr>
         </div>
         <div *ngFor="let item of items">
-        <tr>
-        <td id="id">{{item.no}}</td>
-        <td id="name">{{item.name}}</td>
-        <td id="price">{{item.price}}</td>
-        <td id="quantity">{{item.quantity}}</td>
-        <td id="sold"><input type="number" id=" inp {{item._id}}" [(ngModel)]="item.sold" min="1" max="{{item.quantity}}" (input)="onSoldChange($event)"></td>
-        <td id="amount">{{item.sold*item.price}}</td>
-        <td id="remove"><button type="button" class="btn btn-danger" id={{item._id}} (click)="removeItem($event)">Remove</button></td>
-        </tr>
+            <tr>
+                <td id="id">{{item.no}}</td>
+                <td id="name">{{item.name}}</td>
+                <td id="price">{{item.price}}</td>
+                <td id="quantity">{{item.quantity}}</td>
+                <td id="sold"><input type="number" id=" inp {{item._id}}" [(ngModel)]="item.sold" min="1" max="{{item.quantity}}" (input)="onSoldChange($event)"></td>
+                <td id="amount">{{item.sold*item.price}}</td>
+                <td id="remove"><button type="button" class="btn btn-danger" id={{item._id}} (click)="removeItem($event)">Remove</button></td>
+            </tr>
         </div>
         </table>
-        <div id="total" style="padding-left: 350px;"><b>TOTAL: {{sum_total}}</b></div>
+        <div id="total" style="padding-left: 400px;"><b>TOTAL: {{sum_total}}</b></div>
         </div>
         <button type="button" class="btn btn-success" (click)="placeOrder()">Place Order</button>
         <button type="button" class="btn btn-danger" (click)="clearCart()">Clear Cart</button>
@@ -48,33 +48,48 @@
 </ng-container>
 
 <ng-container *ngIf="true">
-    <ul class="items">
+    <ul>
         <div id="printData">
-            <h2 id="shop">RAJ ELECTRONICS</h2>
-        <div>
-            <label for="todayDate">Date: {{todayDate}}</label>
-        </div>
+            <h2 style="padding-left: 100px;">RAJ ELECTRONICS</h2>
         <table id="customers">
         <div>
+            <tr class="noBorder">
+                <div class="left">
+                    <td colspan="5" style="text-align: left;">
+                        <div class="left">
+                            <b>Date: {{todayDate}}</b>
+                        </div>
+                        <div class="right">
+                            <b>Time: {{currentTime}}</b>
+                        </div>
+                    </td>
+                </div>
+            </tr>
+        </div>
+        <div>
             <tr>
-                <th id="id">NO</th>
-                <th id="name">NAME</th>
-                <th id="price">PRICE</th>
-                <th id="quantity">SELL</th>
-                <th id="amount">AMT</th>
+                <th>NO</th>
+                <th>NAME</th>
+                <th>PRICE</th>
+                <th>SELL</th>
+                <th>AMT</th>
             </tr>
         </div>
         <div *ngFor="let item of items">
         <tr>
-        <td id="id">{{item.no}}</td>
-        <td id="name">{{item.name}}</td>
-        <td id="price">{{item.price}}</td>
-        <td id="sold">{{item.sold}}</td>
-        <td id="amount">{{item.sold*item.price}}</td>
+        <td>{{item.no}}</td>
+        <td>{{item.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.sold}}</td>
+        <td>{{item.sold*item.price}}</td>
         </tr>
         </div>
+        <div>
+            <tr class="noBorder">
+                <td colspan="5" style="text-align: right;"><b>TOTAL: {{sum_total}}</b></td>
+            </tr>
+        </div>
         </table>
-        <div id="total" style="padding-left: 350px;"><b>TOTAL: {{sum_total}}</b></div>
         </div>
     </ul>
 </ng-container>

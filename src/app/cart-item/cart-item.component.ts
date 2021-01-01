@@ -1,34 +1,47 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {CommonService} from '../common.service';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.css']
 })
-export class CartItemComponent implements OnInit {
+export class CartItemComponent implements OnInit, OnDestroy {
   items = [];
   sum_total = 0;
   sum_items = [];
   cartIsEmpty = false;
-  todayDate = new Date().toISOString().split("T",1)[0].split("-").reverse().join("-");
+  todayDate: String;
+  currentTime: String;
   removeCartItemUrl = 'http://localhost:8000/api/removeCartItem/';
   getCartItemsUrl = 'http://localhost:8000/api/cartItems';
   clearCartUrl = 'http://localhost:8000/api/clearCart';
+  orderPlaced = false;
   constructor(private http: HttpClient, private newService: CommonService) { }
 
   ngOnInit(): void {
+    this.todayDate = new Date().toISOString().split("T",1)[0].split("-").reverse().join("-");
+    var date = new Date();
+    this.currentTime = date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
     this.getCartItems();
+  }
+  ngOnDestroy(): void
+  {
+    if(this.orderPlaced)
+      this.clearCart();
   }
   placeOrder()
   {
+    if(this.orderPlaced)
+      return;
     var date = new Date().toISOString().split("T",1)[0];
     date = date.split("-").reverse().join("-");
     this.newService.placeOrder({mode:"sell", items:this.items, date:date, amount:this.sum_total});
     alert("ORDER PLACED SUCCESSFULLY!!!");
+    this.orderPlaced = true;
     this.printOrder();
-    this.clearCart();
   }
   onSoldChange(event:any)
   {
@@ -65,16 +78,17 @@ export class CartItemComponent implements OnInit {
     var divToPrint = document.getElementById("printData");
     var htmlToPrint = '' +
           '<style type="text/css">' +
-          '#shop{'+
-          'padding-left:130px'+
-          '}'+
           'table th, table td {' +
-          'border:1px solid #000;' +
+          'border:2px solid #000;' +
           'padding:0.5em;' +
           '}' +
-          '#total{'+
-          'position:absolute;'+
+          'tr.noBorder td {'+
+          'border:0;'+
           '}'+
+          '.left {'+
+          'float: left;}'+
+          '.right {'+
+          'float: right;}'+
           '</style>';
       
     htmlToPrint += divToPrint.outerHTML;
