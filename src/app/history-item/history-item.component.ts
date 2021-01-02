@@ -15,13 +15,16 @@ export class HistoryItemComponent implements OnInit {
   itemsByItem = [];
   finalItemsByDate = [];
   finalItemsByItem = [];
+  finalItemsByBill = [];
   datesItem = [];
   itemsItem = [];
+  billsItem = [];
   selectedTime: string = "today";
   selectedOrder: string = "date";
   historyURL = 'http://localhost:8000/api/itemsHistory';
   custom = false;
-  visibility = {date:true, item:false};
+  visibility = {bill: false, date: true, item:false};
+  datareceived = false;
 
 constructor(private http: HttpClient) { }
 
@@ -37,6 +40,7 @@ clearVisibility()
 {
   this.visibility.date = false;
   this.visibility.item = false;
+  this.visibility.bill = false;
 }
 
 onSearchChange(searchValue: string): void {  
@@ -55,6 +59,13 @@ onSearchChange(searchValue: string): void {
         return val.name.toLowerCase().includes(searchValue);
       })
   }
+  else if(this.visibility.bill == true)
+  {
+    this.billsItem = this.finalItemsByBill.filter(val => 
+      {
+        return val.billno.toString().toLowerCase().includes(searchValue);
+      })
+  }
 }
 onTimeSelected(value:string)
 {
@@ -67,6 +78,8 @@ onOrderSelected(value:string)
     this.visibility.date = true;
   else if(value == "item")
     this.visibility.item = true;
+  else if(value == "bill")
+    this.visibility.bill = true;
 }
 clear()
 {
@@ -75,10 +88,8 @@ clear()
 
 getData()
 {
-  if(this.selectedOrder == "date" && this.itemsByDate.length)
-      return;
-  else if(this.selectedOrder == "item" && this.itemsByItem.length)
-      return;
+  if(this.datareceived)
+    return;
   if(this.selectedTime == "today")
     this.getTodayData();
   else if(this.selectedTime == "yesterday")
@@ -91,6 +102,7 @@ getData()
     this.getCustom();
   else
     this.getHistory(new HttpParams());
+  this.datareceived = true;
 }
 
 orderItemsByDate()
@@ -174,7 +186,8 @@ getHistory(params: HttpParams)
                 var items = JSON.parse(value).items;
                 var amount = JSON.parse(value).amount;
                 var date = JSON.parse(value).date;
-                this.itemsHistory.push({items,amount,date});
+                var billno = JSON.parse(value).billno;
+                this.itemsHistory.push({items,amount,date,billno});
               }
           }
         }
@@ -186,7 +199,8 @@ getHistory(params: HttpParams)
             var items = JSON.parse(value).items;
             var amount = JSON.parse(value).amount;
             var date = JSON.parse(value).date;
-            this.itemsHistory.push({items,amount,date});
+            var billno = JSON.parse(value).billno;
+            this.itemsHistory.push({items,amount,date,billno});
           }
         }
           this.itemsHistory.reverse();
@@ -236,6 +250,16 @@ getHistory(params: HttpParams)
           }
         }
         this.orderItemsByItems();
+        var ind = 0;
+        for(let val of this.itemsHistory)
+        {
+          var items = val.items;
+          this.finalItemsByBill.push({billno: val.billno, amount: val.amount, date:val.date,items:[]});
+          for(let item of items)
+            this.finalItemsByBill[ind].items.push({name:item.name, price:item.price, sold:item.sold, amount: item.price*item.sold});
+          ind+=1;
+        }
+        this.billsItem = this.finalItemsByBill;
     }
   )
 }

@@ -11,12 +11,59 @@ app.use(cors())
 var Item = require('./item');
 var CartItem = require('./cartitem');
 var SoldItems = require('./solditems');
+var BillNo = require('./bill');
+
+
+app.get('/api/getBillNo', (req,res) => {
+    BillNo.findOne({}, function(err,obj){
+        if(err)
+            console.log(err);
+        else if(!obj)
+        {
+            var billno = new BillNo();
+            billno.billno = 1000;
+            billno.save((err,result) =>{
+                if(err)
+                    console.log(err);
+                res.send([result]);
+            })
+        }
+        else
+            res.send([obj]);
+    })
+});
+
+app.post('/api/updateBillNo', (req,res) =>{
+    var no = req.body.billno;
+    BillNo.findOne({},function(err,foundObject){
+        if(err)
+            console.log(err);
+        else if(foundObject)
+        {
+            foundObject.billno = no;
+            foundObject.save((err,updatedObject) =>{
+                if(err)
+                    console.log(err);
+            });
+        }
+        else
+        {
+            var billno = new BillNo();
+            billno.billno = 1000;
+            billno.save((err,result) =>{
+                if(err)
+                    console.log(err);
+                res.send([result]);
+            })
+        }
+    });
+})
 
 app.post('/api/saveItem',(req,res) =>
 {
     var itemData = req.body;
     query = {name:req.body.name};
-    Item.findOne({query},function(err,obj){
+    Item.findOne(query,function(err,obj){
         if(err)
             console.log(err);
         else if(!obj)
@@ -46,6 +93,7 @@ app.post('/api/updateItems', (req,res) =>
         solditems.items = items;
         solditems.date = req.body.date;
         solditems.amount = req.body.amount;
+        solditems.billno = req.body.billno;
         solditems.save((err,res) =>{
             if(err)
                 console.log(err);

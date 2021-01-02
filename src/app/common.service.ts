@@ -34,4 +34,10 @@ export class CommonService {
       console.log(res);
     });
   }
+  updateBillNo(billno)
+  {
+    return this.http.post('http://localhost:8000/api/updateBillNo', billno).subscribe(res => {
+      console.log(res);
+    })
+  }
 }

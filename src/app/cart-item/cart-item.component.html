@@ -5,8 +5,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<br>
 <ng-container *ngIf="!cartIsEmpty">
-    <p>YOUR CART IS EMPTY !!!</p>
+    <h4>YOUR CART IS EMPTY ADD SOMETHING TO PLACE ORDER!</h4>
 </ng-container>
 <br>
 <ng-container *ngIf="cartIsEmpty">
@@ -50,8 +51,12 @@
 <ng-container *ngIf="true">
     <ul>
         <div id="printData">
-            <h2 style="padding-left: 100px;">RAJ ELECTRONICS</h2>
         <table id="customers">
+        <div>
+            <tr class="noBorder">
+                <td colspan="5" style="text-align: center;"><h2>RAJ ELECTRONICS</h2></td>
+            </tr>
+        </div>
         <div>
             <tr class="noBorder">
                 <div class="left">
@@ -60,7 +65,7 @@
                             <b>Date: {{todayDate}}</b>
                         </div>
                         <div class="right">
-                            <b>Time: {{currentTime}}</b>
+                            <b>Bill No: {{billno}}</b>
                         </div>
                     </td>
                 </div>

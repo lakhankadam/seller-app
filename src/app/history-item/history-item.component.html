@@ -23,6 +23,7 @@
  <select [(ngModel)]="selectedOrder" #myOrder (change)='onOrderSelected(myOrder.value)'>
     <option value="date">Date</option>
     <option value="item">Item</option>
+    <option value="bill">Bill No</option>
  </select>
 
 <ng-container *ngIf="custom">
@@ -95,63 +96,33 @@
         <br>
     </ul>
 </ng-container>
-</ul>
 
-<!-- <ng-container *ngIf="visibility.date">
-<ul class="finalItems">
-    <div *ngFor="let val of finalItemsByDate">
-        <div>Date: {{val.date}}</div>
-        <div *ngFor="let data of (val.data)">
+<ng-container *ngIf="visibility.bill">
+    <ul>
+        <div *ngFor="let val of billsItem">
+            <h5>Bill No: {{val.billno}}</h5>
+            <h6>Date: {{val.date}}</h6>
+            <h6>Amount: {{val.amount}}</h6>
             <table id="customers">
                 <div>
                     <tr>
-                        <th id="id">ID</th>
                         <th id="name">NAME</th>
                         <th id="price">PRICE</th>
                         <th id="sold">SOLD</th>
                         <th id="amount">AMT</th>
                     </tr>
                 </div>
-                <div *ngFor="let item of (data.items)">
+                <div *ngFor="let item of val.items">
                     <tr>
-                        <td id="id">{{item.id}}</td>
                         <td id="name">{{item.name}}</td>
                         <td id="price">{{item.price}}</td>
                         <td id="sold">{{item.sold}}</td>
-                        <td id="amount">{{item.price*item.sold}}</td>
-                    </tr>
+                        <td id="amount">{{item.amount}}</td>
+                    </tr>    
                 </div>
             </table>
-        </div>
-    </div>
-</ul>
-</ng-container>
-
-<ng-container *ngIf="visibility.item">
-    <ul class="finalItems">
-        <div *ngFor="let val of finalItemsByItem">
-            <div>Item Name: {{val.name}}</div>
-            <table id="customers">
-                <div>
-                    <tr>
-                        <th id="date">DATE</th>
-                        <th id="price">PRICE</th>
-                        <th id="sold">SOLD</th>
-                        <th id="amount">AMT</th>
-                    </tr>
-                </div>
-                <div *ngFor="let data of (val.data)">
-                    <tr>
-                        <td id="date">{{data.date}}</td>
-                        <td id="price">{{data.price}}</td>
-                        <td id="sold">{{data.sold}}</td>
-                        <td id="amount">{{data.amount}}</td>
-                    </tr>
-                </div>
-        </table>
+            <br>
         </div>
     </ul>
 </ng-container>
-
-
-  -->
+</ul>

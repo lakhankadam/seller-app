@@ -4,6 +4,7 @@ Schema = mongoose.Schema
 const SoldItemsSchema = Schema({
     date:String,
     amount:Number,
+    billno: Number,
     items:
     [{
         name: String,

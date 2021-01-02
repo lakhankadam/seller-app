@@ -44,17 +44,21 @@ export class SellItemComponent implements OnInit {
     this.allItems = [];
     this.http.get(this.getItemsUrl).subscribe(
       results => {
+        var ind = 1;
         for(let i in results)
         {
           var value = JSON.stringify(results[i]);
           var _id = JSON.parse(value)._id;
-          var id = parseInt(i)+1;
           var name = JSON.parse(value).name;
           var price = JSON.parse(value).price;
           var quantity = JSON.parse(value).quantity;
           var sold = "";
           if(quantity != 0)
+          {
+            var id = ind;
             this.allItems.push({_id,id,name,price,quantity,sold});
+            ind+=1;
+          }
         }
         this.finalItems = this.allItems;
       }

@@ -1,14 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {CommonService} from '../common.service';
-import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.css']
 })
-export class CartItemComponent implements OnInit, OnDestroy {
+export class CartItemComponent implements OnInit{
   items = [];
   sum_total = 0;
   sum_items = [];
@@ -18,30 +17,43 @@ export class CartItemComponent implements OnInit, OnDestroy {
   removeCartItemUrl = 'http://localhost:8000/api/removeCartItem/';
   getCartItemsUrl = 'http://localhost:8000/api/cartItems';
   clearCartUrl = 'http://localhost:8000/api/clearCart';
-  orderPlaced = false;
+  getBillNoUrl = 'http://localhost:8000/api/getBillNo';
+  billno = 1000;
   constructor(private http: HttpClient, private newService: CommonService) { }
+
 
   ngOnInit(): void {
     this.todayDate = new Date().toISOString().split("T",1)[0].split("-").reverse().join("-");
     var date = new Date();
     this.currentTime = date.getHours().toString() + ":" + date.getMinutes().toString() + ":" + date.getSeconds().toString();
     this.getCartItems();
+    this.getBillNo();
   }
-  ngOnDestroy(): void
+
+  getBillNo()
   {
-    if(this.orderPlaced)
-      this.clearCart();
+    this.http.get(this.getBillNoUrl).subscribe(
+      results  => {
+        this.billno = results[0].billno;
+      }
+    )
   }
+
+  updateBillNo()
+  {
+    this.newService.updateBillNo({billno:this.billno+1});
+  }
+
   placeOrder()
   {
-    if(this.orderPlaced)
-      return;
+    
+    this.updateBillNo();
     var date = new Date().toISOString().split("T",1)[0];
     date = date.split("-").reverse().join("-");
-    this.newService.placeOrder({mode:"sell", items:this.items, date:date, amount:this.sum_total});
+    this.newService.placeOrder({mode:"sell", items:this.items, date:date, billno: this.billno, amount:this.sum_total});
     alert("ORDER PLACED SUCCESSFULLY!!!");
-    this.orderPlaced = true;
     this.printOrder();
+    this.clearCart();
   }
   onSoldChange(event:any)
   {
